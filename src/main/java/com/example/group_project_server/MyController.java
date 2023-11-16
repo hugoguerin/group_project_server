@@ -1,44 +1,77 @@
 package com.example.group_project_server;
 
 import com.example.group_project_server.beans.CommandeBean;
+import com.example.group_project_server.beans.PCBean;
+import com.example.group_project_server.beans.ProduitBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 public class MyController {
-    @DeleteMapping("/supprimerProduit")
-    public void supprimerProduit(){
-        //Supprimer un produit ( grâce à son id?)
+
+    @Autowired
+    private PCservice pCservice;
+
+    // http://localhost:8081/produits
+    @GetMapping("/produits")
+    public String showProducts(Model model) {
+        System.out.println("/produits");
+
+        model.addAttribute("produitListe", pCservice.getAllProducts());
+
+        return "produits";
     }
 
-    @DeleteMapping("/supprimerCommande")
-    public void supprimerCommande(){
-        //Supprimer une commande ( grâce à son id?)
+    // http://localhost:8081/commandes
+    @GetMapping("/commandes")
+    public String showCommandes(Model model) {
+        System.out.println("/commandes");
+
+//        List<CommandeBean> commandesListe = pCservice.getAllCommandes();
+//
+//        for (CommandeBean commande : commandesListe) {
+//            model.addAttribute("commandesListe", commandesListe);
+//            List<PCBean> detailsCommande = pCservice.getDetailsByCommandeId(commande.getIdCommande());
+//            model.addAttribute("detailsCommande", detailsCommande);
+//        }
+//
+//        model.addAttribute("commandesListe", commandesListe);
+
+
+        List<CommandeBean> commandesListe = pCservice.getAllCommandes();
+        model.addAttribute("commandesListe", commandesListe);
+
+        // Loop through commandesListe and fetch details for each command
+        List<List<PCBean>> detailsForCommands = new ArrayList<>();
+        for (CommandeBean commande : commandesListe) {
+            List<PCBean> detailsCommande = pCservice.getDetailsByCommandeId(commande.getIdCommande());
+            detailsForCommands.add(detailsCommande);
+        }
+        model.addAttribute("detailsForCommands", detailsForCommands);
+
+//        return "yourTemplate"; // Replace with the actual template name
+
+        return "commandes";
     }
 
-    @PutMapping("/modifierProduit")
-    public void modifierProduit(){
-        //Modifie un produit ( grâce à son id?)
+    @PostMapping("/ajouterProduit")
+    public String ajouterProduit(ProduitBean produit){
+        System.out.println("/ajouterProduit");
+        pCservice.ajouterProduit(produit);
+        return "redirect:/produits";
     }
 
-    @PutMapping("/modifierCommande")
-    public void modifierCommande(){
-        //Modifie une commande ( grâce à son id?)
+    @PostMapping("/supprimerProduit")
+    public String supprimerProduit(int id){
+        System.out.println("/suppimerProduit");
+        pCservice.supprimerProduit(id);
+        return "redirect:/produits";
     }
-
-    @GetMapping("/getAllCommandes")
-    public List<CommandeBean> getAllCommandes(){
-        //Return la liste de tous les commande
-        return null;
-    }
-    @PostMapping("/postProduit")
-    public void posterProduit(){
-        // Pas de return , mais la fonction vient ajouter un article en bdd
-    }
-
 }

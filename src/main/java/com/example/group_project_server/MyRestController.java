@@ -2,12 +2,17 @@ package com.example.group_project_server;
 
 import com.example.group_project_server.beans.CommandeBean;
 import com.example.group_project_server.beans.ProduitBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class MyRestController {
+
+    @Autowired
+    private PCservice pCservice;
+
 
     //http://localhost:8081/test
     @GetMapping("/test")
@@ -21,7 +26,8 @@ public class MyRestController {
     @GetMapping("/getAllProducts")
     public List<ProduitBean> getProduit(){
         //Return la liste de tous les produits
-        return null;
+
+        return pCservice.getAllProducts();
     }
 
     //http://localhost:8081/postCommande

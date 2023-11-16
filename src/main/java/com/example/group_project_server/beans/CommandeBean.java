@@ -1,34 +1,36 @@
 package com.example.group_project_server.beans;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.List;
-
+@Entity
+@Table(name = "commandes")
 public class CommandeBean {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCommande;
-
     private Date dateCommande;
-
-    private ClientBean client;
-
-    private List<ListProduitsBean> liste;
+    private String nomClient;
+    private String telephoneClient;
 
     //
     //CONSTRUCTEUR
     //
 
     public CommandeBean() {
-
     }
-    public CommandeBean(int idCommande, Date dateCommande, ClientBean client, List<ListProduitsBean> liste) {
+
+    public CommandeBean(int idCommande, Date dateCommande, String nomClient, String telephoneClient) {
         this.idCommande = idCommande;
         this.dateCommande = dateCommande;
-        this.client = client;
-        this.liste = liste;
+        this.nomClient = nomClient;
+        this.telephoneClient = telephoneClient;
+
     }
 
-
-    //
+//
     // GETTER SETTER
     //
 
@@ -49,19 +51,20 @@ public class CommandeBean {
         this.dateCommande = dateCommande;
     }
 
-    public ClientBean getClient() {
-        return client;
+    public String getNomClient() {
+        return nomClient;
     }
 
-    public void setClient(ClientBean client) {
-        this.client = client;
+    public void setNomClient(String nomClient) {
+        this.nomClient = nomClient;
     }
 
-    public List<ListProduitsBean> getListe() {
-        return liste;
+    public String getTelephoneClient() {
+        return telephoneClient;
     }
 
-    public void setListe(List<ListProduitsBean> liste) {
-        this.liste = liste;
+    public void setTelephoneClient(String telephoneClient) {
+        this.telephoneClient = telephoneClient;
     }
+
 }

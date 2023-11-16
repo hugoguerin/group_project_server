@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
+    <style>
+        img{
+            min-height: 150px;
+            max-height: 150px;
+        }
+
+    </style>
+</head>
+<body>
+<!-- Start your project here-->
+<section style="background-color: #eee;">
+
+    <h1 class="row justify-content-center mb-3">Gestion des produits</h1>
+    <div class="container py-2">
+        <div class="row">
+
+            <form method="post" action="/ajouterProduit" th:object="${ProduitBean}" class="col-md-6 p-2">
+                <!-- Name input -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="nomProduit" name="nomProduit" class="form-control" required/>
+                    <label class="form-label" for="nomProduit">Nom du produit</label>
+                </div>
+
+                <!-- Description input -->
+                <div class="form-outline mb-4">
+                    <textarea class="form-control" id="descriptionProduit" name="descriptionProduit" rows="4" required></textarea>
+                    <label class="form-label" for="descriptionProduit">Description du produit</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="uniteProduit" name="uniteProduit" class="form-control" required/>
+                    <label class="form-label" for="uniteProduit">Unité du produit</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="number" id="prixProduit" name="prixProduit" step="0.01" class="form-control" required/>
+                    <label class="form-label" for="prixProduit">Prix du produit</label>
+                </div>
+
+
+                <div class="form-outline mb-4">
+                    <input type="url" id="imageProduit" name="imageProduit"class="form-control" required/>
+                    <label class="form-label" for="imageProduit">Url de l'image produit</label>
+                </div>
+
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-success btn-block mb-4">Ajouter le produit</button>
+
+            </form>
+
+
+
+
+
+
+
+            <form method="post" action="/supprimerProduit" class="col-md-6 p-2">
+                <!-- Second Form -->
+                <div class="form-outline mb-4">
+                    <input type="number" name="id" pattern="\d+" id="id" class="form-control" required/>
+                    <label class="form-label" for="id">ID du produit à supprimer</label>
+                </div>
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-danger btn-block mb-4">Supprimer le produit</button>
+            </form>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <h1 class="row justify-content-center mb-3">Liste des produits</h1>
+    <div class="container py-2" th:each="produit : ${produitListe}">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+                <div class="card shadow-0 border rounded-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                    <img th:src="${produit.getImageProduit()}"
+                                         class="w-100 mw-100" />
+                                    <a href="#!">
+                                        <div class="hover-overlay">
+                                            <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <h5 th:text="'#' + ${produit.getIdProduit()} + ' ' + ${produit.getNomProduit()}"></h5>
+
+                                <p class="text-truncate mb-4 mb-md-0" th:text="${produit.getDescriptionProduit()}">
+
+                                </p>
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                <div class="d-flex flex-row align-items-center mb-1">
+                                    <h4 class="mb-1 me-1" th:text="${produit.getPrixProduit()}+€"></h4>
+                                </div>
+                                <h6 class="text-success" th:text="${produit.getUniteProduit()}"></h6>
+<!--                                <div class="d-flex flex-column mt-4">-->
+<!--                                    <button class="btn btn-danger btn-sm" type="button">Supprimer</button>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End your project here-->
+
+<!-- MDB -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<!-- Custom scripts -->
+<script type="text/javascript"></script>
+</body>
+</html>

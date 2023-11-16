@@ -1,7 +1,14 @@
 package com.example.group_project_server.beans;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "produits")
 public class ProduitBean {
-    private int idProduit;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String nomProduit;
     private String descriptionProduit;
     private String uniteProduit;
@@ -15,8 +22,7 @@ public class ProduitBean {
     public ProduitBean() {
     }
 
-    public ProduitBean(int idProduit, String nomProduit, String descriptionProduit, String uniteProduit, double prixProduit, String imageProduit) {
-        this.idProduit = idProduit;
+    public ProduitBean(String nomProduit, String descriptionProduit, String uniteProduit, double prixProduit, String imageProduit) {
         this.nomProduit = nomProduit;
         this.descriptionProduit = descriptionProduit;
         this.uniteProduit = uniteProduit;
@@ -30,11 +36,11 @@ public class ProduitBean {
 
 
     public int getIdProduit() {
-        return idProduit;
+        return id;
     }
 
-    public void setIdProduit(int idProduit) {
-        this.idProduit = idProduit;
+    public void setIdProduit(int id) {
+        this.id = id;
     }
 
     public String getNomProduit() {
