@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
-    <!-- MDB icon -->
-    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <title>Commandes</title>
     <!-- Font Awesome -->
     <link
             rel="stylesheet"
@@ -25,27 +23,70 @@
 
 <section style="background-color: #eee;" >
 
-<!--    <div th:each="commande : ${commandesListe}">-->
-<!--        <div class=" col-2 text-center" th:text="'Id commande: ' + ${commande.getIdCommande()}"></div>-->
-<!--        <div class=" col-2 text-center" th:text="'Nom client: ' + ${commande.getNomClient()}"></div>-->
-<!--        <div class=" col-2 text-center" th:text="'Tel client: ' + ${commande.getTelephoneClient()}"></div>-->
-<!--        <div class=" col-2 text-center" th:text="'Date: ' + ${commande.getDateCommande()}"></div>-->
-<!--        <div th:text="'Détail commande: ' + ${detailsCommande}"></div>-->
-<!--    </div>-->
+    <div class="row justify-content-center">
+        <form method="post" action="/supprimerCommande" class="col-md-4 p-2">
+            <!-- Second Form -->
+            <div class="form-outline mb-4">
+                <input type="number" name="id" pattern="\d+" id="id" class="form-control" required/>
+                <label class="form-label" for="id">ID de la commande à supprimer</label>
+            </div>
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-danger btn-block mb-4">Supprimer la commande</button>
+        </form>
+    </div>
 
 
-    <div th:each="commande, commandIndex : ${commandesListe}">
-        <div class="col-2 text-center" th:text="'Id commande: ' + ${commande.getIdCommande()}"></div>
-        <div class="col-2 text-center" th:text="'Nom client: ' + ${commande.getNomClient()}"></div>
-        <div class="col-2 text-center" th:text="'Tel client: ' + ${commande.getTelephoneClient()}"></div>
-        <div class="col-2 text-center" th:text="'Date: ' + ${commande.getDateCommande()}"></div>
+    <div class="container pt-3"  th:each="commande, commandIndex : ${commandesListe}">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+                <div class="card shadow-0 border rounded-3">
+                    <div class="card-body">
+                        <div class="row">
 
-        <!-- Access details for the current command -->
-        <div th:each="detail : ${detailsForCommands[__${commandIndex.index}__]}">
-                <div th:text="'Quantité: '+ ${detail.getQuantiteProduit()}"></div>
-                <div th:text="'Id produit: '+${detail.getIdProduit()}"></div>
+                            <div class="col-md-9 col-lg-9 col-xl-9">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <h3 class="text-bg-success" th:text="'ID commande #' + ${commande.getIdCommande()}"></h3>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                        <h4 th:text=" ${commande.getDateCommande()}"></h4>
+                                    </div>
+                                </div>
+                                <h4 class="row">Détails:</h4>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <h5>ID Produit:</h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <h5>Quantité:</h5>
+                                    </div>
+                                </div>
+                                <div th:each="detail : ${detailsForCommands[__${commandIndex.index}__]}">
+                                    <div class="row">
+                                        <div class="col-3 border border-secondary mb-1">
+                                            <div th:text="${detail.getIdProduit()}"></div>
+                                        </div>
+                                        <div class="col-3 border border-secondary mb-1">
+                                            <div th:text="${detail.getQuantiteProduit()}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                <h4 class="mb-1 me-1 mb-6">Infos client:</h4>
+                                <h6  th:text="'Nom: '+ ${commande.getNomClient()}"></h6>
+                                <h6  th:text="'Tél: '+ ${commande.getTelephoneClient()}"></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
 
 
 </section>

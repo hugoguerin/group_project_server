@@ -2,6 +2,7 @@ package com.example.group_project_server.models;
 
 import com.example.group_project_server.beans.PCBean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +13,9 @@ public interface PCRepository extends JpaRepository<PCBean, Integer> {
 
     @Query("SELECT pc FROM PCBean pc WHERE pc.idCommande = :idCommande")
     List<PCBean> findAllByCommandeId(int idCommande);
+
+    @Modifying
+    @Query("DELETE FROM PCBean pc WHERE pc.idCommande = :id")
+    void deleteByCommandeId(int id);
 
 }

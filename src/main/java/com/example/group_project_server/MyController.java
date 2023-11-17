@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,29 +36,15 @@ public class MyController {
     public String showCommandes(Model model) {
         System.out.println("/commandes");
 
-//        List<CommandeBean> commandesListe = pCservice.getAllCommandes();
-//
-//        for (CommandeBean commande : commandesListe) {
-//            model.addAttribute("commandesListe", commandesListe);
-//            List<PCBean> detailsCommande = pCservice.getDetailsByCommandeId(commande.getIdCommande());
-//            model.addAttribute("detailsCommande", detailsCommande);
-//        }
-//
-//        model.addAttribute("commandesListe", commandesListe);
-
-
         List<CommandeBean> commandesListe = pCservice.getAllCommandes();
         model.addAttribute("commandesListe", commandesListe);
 
-        // Loop through commandesListe and fetch details for each command
         List<List<PCBean>> detailsForCommands = new ArrayList<>();
         for (CommandeBean commande : commandesListe) {
             List<PCBean> detailsCommande = pCservice.getDetailsByCommandeId(commande.getIdCommande());
             detailsForCommands.add(detailsCommande);
         }
         model.addAttribute("detailsForCommands", detailsForCommands);
-
-//        return "yourTemplate"; // Replace with the actual template name
 
         return "commandes";
     }
@@ -74,4 +62,13 @@ public class MyController {
         pCservice.supprimerProduit(id);
         return "redirect:/produits";
     }
+
+    @PostMapping("/supprimerCommande")
+    public String supprimerCommande(int id){
+        System.out.println("/supprimerCommande");
+        pCservice.supprimerCommande(id);
+        return "redirect:/commandes";
+    }
+
+
 }

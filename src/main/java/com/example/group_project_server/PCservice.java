@@ -6,6 +6,7 @@ import com.example.group_project_server.beans.ProduitBean;
 import com.example.group_project_server.models.CommandeRepository;
 import com.example.group_project_server.models.PCRepository;
 import com.example.group_project_server.models.ProduitRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Service
+@Transactional
 public class PCservice {
     @Autowired
     private CommandeRepository commandeRepository;
@@ -38,13 +40,12 @@ public class PCservice {
         return commandeRepository.findAll();
     }
 
-    public List<PCBean> getDetailsByCommandeId (int id) {return pcRepository.findAllByCommandeId(id); }
+    public List<PCBean> getDetailsByCommandeId (int id) {return pcRepository.findAllByCommandeId(id);}
 
-    @DeleteMapping("/supprimerCommande")
-    public void supprimerCommande(){
-        //Supprimer une commande ( grâce à son id?)
+    public void supprimerCommande(int id) {
+        pcRepository.deleteByCommandeId(id);
+        commandeRepository.deleteById(id);
     }
-
 
 
 }

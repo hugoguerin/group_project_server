@@ -22,8 +22,8 @@ public class CommandeBean {
     public CommandeBean() {
     }
 
-    public CommandeBean(int idCommande, Date dateCommande, String nomClient, String telephoneClient) {
-        this.idCommande = idCommande;
+    public CommandeBean(Date dateCommande, String nomClient, String telephoneClient) {
+
         this.dateCommande = dateCommande;
         this.nomClient = nomClient;
         this.telephoneClient = telephoneClient;
