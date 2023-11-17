@@ -22,8 +22,8 @@ public class PCBean {
 
     public PCBean() {}
 
-    public PCBean(int idPc, int idCommande, int idProduit, int quantiteProduit) {
-        this.idPc = idPc;
+    public PCBean(int idCommande, int idProduit, int quantiteProduit) {
+
         this.idCommande = idCommande;
         this.idProduit = idProduit;
         this.quantiteProduit = quantiteProduit;
